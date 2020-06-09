@@ -1,0 +1,40 @@
+
+
+- name: Create Go cache directory
+  file:
+    path: "{{golang_cache_directory}}"
+    mode: 0700
+    state: directory
+
+- name: "Download golang {{golang_version}}"
+  get_url:
+    url: "{{golang_download_url}}"
+    dest: "{{golang_cache_file}}"
+    checksum: "{{ golang_checksum }}"
+    force: false
+  environment: "{{internet_proxy_env}}"
+
+- name: Create Go bin dir
+  file:
+    path: "{{golang_base_dir}}"
+    mode: 0755
+    state: directory
+
+- name: Unpack Go
+  unarchive:
+    src: "{{golang_cache_file}}"
+    dest: "{{golang_base_dir}}"
+    creates: "{{golang_bin_dir}}"
+    extra_opts:
+        - --transform
+        - "s/^go/{{golang_version_path}}/"
+    remote_src: yes
+
+- name: Create go bashrc 
+  template:
+      src: bashrc_basic.j2
+      dest: "{{user_bashrc}}/10-golang"
+  vars:
+      bin: "{{golang_bin_dir}}/bin"
+      extras:
+          - "GOROOT={{golang_bin_dir}}"

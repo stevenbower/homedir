@@ -1,0 +1,102 @@
+
+- name: Create cache directory
+  file:
+    path: "{{cache_directory}}"
+    mode: 0700
+    state: directory
+
+- name: Create homedir directory
+  file:
+    path: "{{user_homedir}}"
+    mode: 0755
+    state: directory
+
+- name: Create bin directory
+  file:
+    path: "{{user_bin}}"
+    mode: 0755
+    state: directory
+
+- name: Create bashrc directory
+  file:
+    path: "{{user_bashrc}}"
+    mode: 0755
+    state: directory
+
+- name: Copy default .bashrc
+  copy:
+    src: .bashrc
+    dest: "{{user_homedir}}/.bashrc"
+    owner: "{{user_name}}"
+    group: "{{user_name}}"
+    mode: '0755'
+
+- name: Add our .bashrc to users .bashrc
+  lineinfile:
+    dest: "{{user_home}}/.bashrc"
+    line: "source '{{user_homedir}}/.bashrc'"
+
+- name: Install git-bash-prompt
+  git:
+    repo: "https://github.com/magicmonty/bash-git-prompt.git"
+    dest: "{{user_bin}}/git-bash-prompt"
+    version: "2.7.1"
+
+- name: Setup git prompt
+  template:
+    src: bashrc_basic.j2
+    dest: "{{user_bashrc}}/10-gitprompt"
+  vars:
+    extras:
+      - "GIT_PROMPT_THEME=Solarized"
+      - "GIT_PROMPT_ONLY_IN_REPO=1"
+      - "source '{{user_bin}}/git-bash-prompt/gitprompt.sh'"
+      - "alias gp='git_prompt_toggle'"
+
+- name: Setup display
+  template:
+    src: bashrc_basic.j2
+    dest: "{{user_bashrc}}/05-display"
+  vars:
+    extras:
+      - "export TERM='xterm-256color'"
+      - "export LIBGL_ALWAYS_INDIRECT=1"
+      - "export DISPLAY=0:0"
+
+- name: Install dircolors
+  git:
+    repo: "https://github.com/seebi/dircolors-solarized.git"
+    dest: "{{user_bin}}/dircolors-solarized"
+    version: "master"
+
+- name: Setup dircolors
+  template:
+    src: bashrc_basic.j2
+    dest: "{{user_bashrc}}/10-dircolors"
+  vars:
+    extras:
+      - "eval `dircolors {{user_bin}}/dircolors-solarized/dircolors.256dark`"
+
+- name: Git
+  import_tasks: git.yml
+
+- name: Vim
+  import_tasks: vim.yml
+
+#- name: Apt
+#  import_tasks: apt.yml
+
+#- name: Python
+#  import_tasks: python.yml
+
+#- name: Go
+#  import_tasks: golang.yml
+
+#- name: Java
+#  import_tasks: java.yml
+
+#- name: Docker
+#  import_tasks: docker.yml
+
+#- name: Kubernetes
+#  import_tasks: kubernetes.yml

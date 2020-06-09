@@ -1,0 +1,13 @@
+
+- name: Create git config directory
+  file:
+    path: "{{user_homedir}}/git"
+    mode: 0755
+    state: directory
+
+- name: Create gitconfig
+  template:
+    src: gitconfig.j2
+    dest: "{{user_home}}/.gitconfig"
+  vars:
+    git_configs: "{{user_homedir}}/git"

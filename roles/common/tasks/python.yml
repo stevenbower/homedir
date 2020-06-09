@@ -1,0 +1,10 @@
+
+# Install python building blocks
+- name: Install python environment
+  apt:
+    pkg:
+    - python3
+    - python3-pip
+    - python3-setuptools
+  become: true
+  environment: "{{internet_proxy_env}}"

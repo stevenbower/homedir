@@ -1,0 +1,31 @@
+
+- name: Add kubernetes apt repo gpg key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+  become: true
+
+- name: Add kuberentes apt repo
+  apt_repository:
+    # TODO: ARM support
+    repo: 'deb https://apt.kubernetes.io/ kubernetes-xenial main'
+    state: present
+    filename: kubernetes
+  become: true
+
+- name: Install kubernetes runtimes
+  apt:
+    update_cache: yes
+    pkg:
+    #- kubelet={{kubernetes.kubelet_version}}
+    #- kubeadm={{kubernetes.kubeadm_version}}
+    - kubectl={{kubernetes.kubectl_version}}
+  become: true
+
+- name: Setup kubernetes bash completion
+  template:
+    src: bashrc_basic.j2
+    dest: "{{user_bashrc}}/10-kubernetes"
+  vars:
+    extras:
+      - "source <(/usr/bin/kubectl completion bash)"

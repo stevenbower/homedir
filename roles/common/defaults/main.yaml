@@ -1,0 +1,65 @@
+
+internal_proxy_env: {}
+internet_proxy_env: {}
+
+user_name: sbower
+user_home: "/home/{{user_name}}"
+user_homedir: "{{user_home}}/.homedir"
+user_bin: "{{user_homedir}}/bin"
+user_bashrc: "{{user_homedir}}/.bashrc.d"
+cache_directory: "{{user_homedir}}/.cache"
+
+# GIT
+git_user_name: stevenbower
+git_user_email: smb-github@alcyon.net
+
+# GOLANG
+golang_version: "1.14.2"
+golang_checksums:
+  x86_64: "sha256:6272d6e940ecb71ea5636ddb5fab3933e087c1356173c61f4a803895e947ebb3"
+  aarch64: "sha256:bb6d22fe5806352c3d0826676654e09b6e41eb1af52e8d506d3fa85adf7f8d88"
+
+golang_architectures:
+  x86_64: "amd64"
+  aarch64: "arm64"
+golang_arch: "{{ java_architectures.get(ansible_architecture) }}"
+golang_download_url: "https://dl.google.com/go/go{{golang_version}}.linux-{{golang_arch}}.tar.gz"
+golang_checksum: "{{ golang_checksums.get(ansible_architecture) }}"
+golang_cache_directory: "{{cache_directory}}/golang"
+golang_cache_file: "{{golang_cache_directory}}/golang.{{golang_version}}.tar.gz"
+golang_base_dir: "{{user_bin}}/golang"
+golang_version_path: "go-{{golang_version}}"
+golang_bin_dir: "{{golang_base_dir}}/{{golang_version_path}}"
+
+# Java
+java_version: "11.0.7+10"
+java_checksums:
+  x86_64: "sha256:ee60304d782c9d5654bf1a6b3f38c683921c1711045e1db94525a51b7024a2ca"
+  aarch64: "sha256:3b8b8bba6a0472ec7de5271cbf67f11e6ab525de6dd5d4729300375f1d56b7a1"
+
+java_architectures:
+  x86_64: "x64"
+  aarch64: "aarch64"
+java_arch: "{{ java_architectures.get(ansible_architecture) }}"
+java_download_url: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-{{java_version|replace('+','%2B')}}/OpenJDK11U-jdk_{{java_arch}}_linux_hotspot_{{java_version|replace('+','_')}}.tar.gz"
+java_checksum: "{{ java_checksums.get(ansible_architecture) }}"
+java_cache_directory: "{{cache_directory}}/java"
+java_cache_file: "{{java_cache_directory}}/java.{{java_version}}.tar.gz"
+java_base_dir: "{{user_bin}}/java"
+java_version_path: "jdk-{{java_version}}"
+java_bin_dir: "{{java_base_dir}}/{{java_version_path}}"
+
+# Maven
+maven_version: "3.6.3"
+maven_download_url: "https://apache.mirrors.lucidnetworks.net/maven/maven-3/{{maven_version}}/binaries/apache-maven-{{maven_version}}-bin.tar.gz"
+maven_checksum: "sha512:c35a1803a6e70a126e80b2b3ae33eed961f83ed74d18fcd16909b2d44d7dada3203f1ffe726c17ef8dcca2dcaa9fca676987befeadc9b9f759967a8cb77181c0"
+
+maven_cache_directory: "{{java_cache_directory}}"
+maven_cache_file: "{{maven_cache_directory}}/apache-maven-{{java_version}}.tar.gz"
+maven_version_path: "apache-maven-{{maven_version}}"
+maven_bin_dir: "{{java_base_dir}}/{{maven_version_path}}"
+
+kubernetes:
+  kubelet_version: 1.17.4-00
+  kubeadm_version: 1.17.4-00
+  kubectl_version: 1.17.4-00

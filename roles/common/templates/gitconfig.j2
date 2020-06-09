@@ -1,0 +1,50 @@
+[user]
+  name = {{git_user_name}}
+  email = {{git_user_email}}
+
+[core]
+  ignorecase = false
+  filemode = false
+  hideDotFiles = dotGitOnly
+  editor = vim
+
+[color]
+  ui = true
+
+[credential]
+  helper = store
+
+[push]
+  default = simple
+
+[alias]
+  b = branch -v
+  bd = branch -d
+  bD = branch -D
+  br = branch
+  ci = commit
+  cim = commit -m
+  cima = commit -am
+  clr = rm -r --cached
+  co = checkout
+  cp = cherry-pick -x
+  d = diff -w
+  dc = diff --cached
+  nb = checkout -b
+  lg = log --graph --date=relative --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset' -20
+  oups = commit --amend --no-edit
+  r = remote -v
+  rh = reset --hard
+  st = status -sb
+  t = tag -l
+  unstage = reset HEAD
+  uncommit = reset --soft HEAD^
+	user = !([ -f {{git_configs}}/user.$1.gitconfig ] && ln -sf {{git_configs}}/user.$1.gitconfig {{git_configs}}/user.current.gitconfig || rm {{git_configs}}/user.current.gitconfig) && :
+	mode = !([ -f {{git_configs}}/mode.$1.gitconfig ] && ln -sf {{git_configs}}/mode.$1.gitconfig {{git_configs}}/mode.current.gitconfig || rm {{git_configs}}/mode.current.gitconfig) && :
+
+[include]
+	path = {{git_configs}}/user.current.gitconfig
+
+[include]
+	path = {{git_configs}}/mode.current.gitconfig
+

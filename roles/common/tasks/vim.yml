@@ -1,0 +1,97 @@
+
+- name: Create .vim directory
+  file:
+    path: "{{user_home}}/.vim"
+    mode: 0755
+    state: directory
+
+- name: Create .vim/autoload directory
+  file:
+    path: "{{user_home}}/.vim/autoload"
+    mode: 0755
+    state: directory
+
+- name: Create .vim/bundle directory
+  file:
+    path: "{{user_home}}/.vim/bundle"
+    mode: 0755
+    state: directory
+
+- name: Copy default .bashrc
+  copy:
+    src: .vimrc
+    dest: "{{user_home}}/.vimrc"
+    mode: '0644'
+
+- name: Install pathogen
+  git:
+    repo: "https://github.com/tpope/vim-pathogen.git"
+    dest: "{{user_bin}}/pathogen"
+    version: "v2.4"
+
+- name: Create .vim/autoload directory
+  file:
+    src: "{{user_bin}}/pathogen/autoload/pathogen.vim"
+    dest: "{{user_home}}/.vim/autoload/pathogen.vim"
+    state: link
+
+- name: Install vim-go bundle
+  git:
+    repo: "https://github.com/fatih/vim-go.git"
+    dest: "{{user_home}}/.vim/bundle/vim-go"
+    version: "v1.23"
+
+- name: Install Jenkinsfile-vim-syntax
+  git:
+    repo: "https://github.com/martinda/Jenkinsfile-vim-syntax.git"
+    dest: "{{user_home}}/.vim/bundle/Jenkinsfile-vim-syntax"
+    version: "master"
+
+- name: Install nerdtree
+  git:
+    repo: "https://github.com/scrooloose/nerdtree.git"
+    dest: "{{user_home}}/.vim/bundle/nerdtree"
+    version: "6.8.0"
+
+- name: Install supertab
+  git:
+    repo: "https://github.com/ervandew/supertab.git"
+    dest: "{{user_home}}/.vim/bundle/supertab"
+    version: "2.1"
+
+- name: Install vim-airline
+  git:
+    repo: "https://github.com/vim-airline/vim-airline.git"
+    dest: "{{user_home}}/.vim/bundle/vim-airline"
+    version: "v0.11"
+
+- name: Install vim-airline-themes
+  git:
+    repo: "https://github.com/vim-airline/vim-airline-themes.git"
+    dest: "{{user_home}}/.vim/bundle/vim-airline-themes"
+    version: "master"
+
+- name: Install vim-bufferline
+  git:
+    repo: "https://github.com/bling/vim-bufferline.git"
+    dest: "{{user_home}}/.vim/bundle/vim-bufferline"
+    version: "v0.3"
+
+- name: Install vim-colors-solarized
+  git:
+    repo: "https://github.com/altercation/vim-colors-solarized.git"
+    dest: "{{user_home}}/.vim/bundle/vim-colors-solarized"
+    version: "master"
+
+- name: Install vim-fugitive
+  git:
+    repo: "https://github.com/tpope/vim-fugitive.git"
+    dest: "{{user_home}}/.vim/bundle/vim-fugitive"
+    version: "v3.2"
+
+- name: Install vim-json
+  git:
+    repo: "https://github.com/elzr/vim-json.git"
+    dest: "{{user_home}}/.vim/bundle/vim-json"
+    version: "master"
+

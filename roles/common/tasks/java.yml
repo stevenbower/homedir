@@ -1,0 +1,62 @@
+- name: Create Java cache directory
+  file:
+    path: "{{java_cache_directory}}"
+    mode: 0700
+    state: directory
+
+- name: Create Java base directory
+  file:
+    path: "{{java_base_dir}}"
+    mode: 0755
+    state: directory
+
+# Java
+- name: "Download Java {{java_version}}"
+  get_url:
+    url: "{{java_download_url}}"
+    dest: "{{java_cache_file}}"
+    checksum: "{{ java_checksum }}"
+    force: false
+  environment: "{{internet_proxy_env}}"
+
+- name: Unpack Java
+  unarchive:
+    src: "{{java_cache_file}}"
+    dest: "{{java_base_dir}}"
+    creates: "{{java_bin_dir}}"
+    remote_src: yes
+
+- name: Create Java bashrc
+  template:
+      src: bashrc_basic.j2
+      dest: "{{user_bashrc}}/10-java"
+  vars:
+      bin: "{{java_bin_dir}}/bin"
+      extras:
+          - "JAVA_HOME={{java_bin_dir}}"
+
+# Maven
+- name: "Download Maven {{maven_version}}"
+  get_url:
+    url: "{{maven_download_url}}"
+    dest: "{{maven_cache_file}}"
+    checksum: "{{ maven_checksum }}"
+    force: false
+  environment: "{{internet_proxy_env}}"
+
+- name: Unpack Maven
+  unarchive:
+    src: "{{maven_cache_file}}"
+    dest: "{{java_base_dir}}"
+    creates: "{{maven_bin_dir}}"
+    remote_src: yes
+
+- name: Create Maven bashrc
+  template:
+      src: bashrc_basic.j2
+      dest: "{{user_bashrc}}/10-maven"
+  vars:
+      bin: "{{maven_bin_dir}}/bin"
+      extras:
+          - "MAVEN_HOME={{maven_bin_dir}}"
+

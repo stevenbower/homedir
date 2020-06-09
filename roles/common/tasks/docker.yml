@@ -1,0 +1,28 @@
+
+- name: Add docker apt repo gpg key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  become: true
+
+- name: Add docker apt repo
+  apt_repository:
+    repo: 'deb https://download.docker.com/linux/ubuntu bionic stable'
+    state: present
+    filename: docker
+  become: true
+
+- name: Install docker cli
+  apt:
+    update_cache: yes
+    pkg:
+    - docker-ce-cli
+  become: true
+
+- name: Create Docker bashrc
+  template:
+      src: bashrc_basic.j2
+      dest: "{{user_bashrc}}/10-docker"
+  vars:
+      extras:
+          - "DOCKER_HOST=tcp://0.0.0.0:2375"
