@@ -1,6 +1,8 @@
 {% if bin is defined %}
 PATH=${PATH}:{{bin}}
 {% endif %}
+{% if extras is defined %}
 {% for ln in extras %}
 {{ln}}
 {% endfor %}
+{% endif %}

@@ -38,3 +38,18 @@
       bin: "{{golang_bin_dir}}/bin"
       extras:
           - "GOROOT={{golang_bin_dir}}"
+
+- name: Install go-workspaces
+  git:
+    repo: "https://github.com/stevenbower/go-workspaces.git"
+    dest: "{{user_homedir}}/go-workspaces"
+    version: "1.2"
+
+- name: Create go-workspaces bashrc 
+  template:
+      src: bashrc_basic.j2
+      dest: "{{user_bashrc}}/11-goworkspaces"
+  vars:
+      extras:
+          - "GO_WS_PATH={{user_home}}/go-workspaces"
+          - "source {{user_homedir}}/go-workspaces/bin/go-workspace.completion"

@@ -80,8 +80,8 @@
 - name: Git
   import_tasks: git.yml
 
-- name: Vim
-  import_tasks: vim.yml
+#- name: Vim
+#  import_tasks: vim.yml
 
 #- name: Apt
 #  import_tasks: apt.yml
@@ -89,8 +89,8 @@
 #- name: Python
 #  import_tasks: python.yml
 
-#- name: Go
-#  import_tasks: golang.yml
+- name: Go
+  import_tasks: golang.yml
 
 #- name: Java
 #  import_tasks: java.yml
