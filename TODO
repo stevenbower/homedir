@@ -1,0 +1,4 @@
+- pip.conf
+- maven config
+- git config with aliases to switch between home/work configs and proxy/noproxy
+

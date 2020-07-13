@@ -77,8 +77,16 @@
     extras:
       - "eval `dircolors {{user_bin}}/dircolors-solarized/dircolors.256dark`"
 
-- name: Git
-  import_tasks: git.yml
+- name: Install some random packages
+  apt:
+    pkg:
+    - zip
+    - unzip
+    - bzip2
+  become: true
+
+#- name: Git
+#  import_tasks: git.yml
 
 #- name: Vim
 #  import_tasks: vim.yml
@@ -89,8 +97,8 @@
 #- name: Python
 #  import_tasks: python.yml
 
-- name: Go
-  import_tasks: golang.yml
+#- name: Go
+#  import_tasks: golang.yml
 
 #- name: Java
 #  import_tasks: java.yml
