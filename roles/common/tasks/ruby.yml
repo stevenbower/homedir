@@ -1,0 +1,36 @@
+- name: Create Ruby cache directory
+  file:
+    path: "{{ruby_cache_directory}}"
+    mode: 0700
+    state: directory
+
+- name: Create Ruby base directory
+  file:
+    path: "{{ruby_base_dir}}"
+    mode: 0755
+    state: directory
+
+# Ruby
+- name: "Download Ruby {{ruby_version}}"
+  get_url:
+    url: "{{ruby_download_url}}"
+    dest: "{{ruby_cache_file}}"
+    force: false
+  environment: "{{internet_proxy_env}}"
+
+- name: Unpack Ruby
+  unarchive:
+    src: "{{ruby_cache_file}}"
+    dest: "{{ruby_base_dir}}"
+    creates: "{{ruby_bin_dir}}"
+    remote_src: yes
+
+- name: Create Ruby bashrc
+  template:
+      src: bashrc_basic.j2
+      dest: "{{user_bashrc}}/10-ruby"
+  vars:
+      bin: "{{ruby_bin_dir}}/bin"
+      extras:
+          - "ruby_HOME={{ruby_bin_dir}}"
+

@@ -1,0 +1,21 @@
+
+- name: Add gcloud apt repo gpg key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+  become: true
+
+- name: Add gloud apt repo
+  apt_repository:
+    repo: 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main'
+    state: present
+    filename: google-cloud-sdk
+  become: true
+
+- name: Install gloud runtimes
+  apt:
+    update_cache: yes
+    pkg:
+    - google-cloud-sdk={{gcloud_version}}
+  become: true
+

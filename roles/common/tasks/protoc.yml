@@ -1,0 +1,67 @@
+- name: Create Protoc cache directory
+  file:
+    path: "{{protoc_cache_directory}}"
+    mode: 0700
+    state: directory
+
+- name: Create Protoc base directory
+  file:
+    path: "{{protoc_base_dir}}"
+    mode: 0755
+    state: directory
+
+    #- name: Create protoc bin directory
+    #file:
+    #path: "{{protoc_bin_dir}}"
+    #mode: 0755
+    #state: directory
+
+- name: Create protoc-gen-go bin directory
+  file:
+    path: "{{protoc_gen_go_bin_dir}}"
+    mode: 0755
+    state: directory
+
+# Protoc
+- name: "Download Protoc {{protoc_version}}"
+  get_url:
+    url: "{{protoc_download_url}}"
+    dest: "{{protoc_cache_file}}"
+    force: false
+  environment: "{{internet_proxy_env}}"
+
+- name: Unpack Protoc
+  unarchive:
+    src: "{{protoc_cache_file}}"
+    dest: "{{protoc_base_dir}}"
+    creates: "{{protoc_bin_dir}}"
+    remote_src: yes
+
+- name: Create Protoc bashrc
+  template:
+      src: bashrc_basic.j2
+      dest: "{{user_bashrc}}/10-protoc"
+  vars:
+      bin: "{{protoc_bin_dir}}/bin"
+
+- name: "Download protoc-gen-go {{protoc_gen_go_version}}"
+  get_url:
+    url: "{{protoc_gen_go_download_url}}"
+    dest: "{{protoc_gen_go_cache_file}}"
+    force: false
+  environment: "{{internet_proxy_env}}"
+
+- name: Unpack protoc-gen-go
+  unarchive:
+    src: "{{protoc_gen_go_cache_file}}"
+    dest: "{{protoc_gen_go_bin_dir}}"
+    creates: "{{protoc_gen_go_bin_dir}}/protoc-gen-go"
+    remote_src: yes
+
+- name: Create Protoc bashrc
+  template:
+      src: bashrc_basic.j2
+      dest: "{{user_bashrc}}/10-protoc-gen-go"
+  vars:
+      bin: "{{protoc_gen_go_bin_dir}}"
+

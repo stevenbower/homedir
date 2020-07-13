@@ -14,16 +14,16 @@ git_user_name: stevenbower
 git_user_email: smb-github@alcyon.net
 
 # GOLANG
-golang_version: "1.14.2"
+golang_version: "1.14.4"
 golang_checksums:
-  x86_64: "sha256:6272d6e940ecb71ea5636ddb5fab3933e087c1356173c61f4a803895e947ebb3"
-  aarch64: "sha256:bb6d22fe5806352c3d0826676654e09b6e41eb1af52e8d506d3fa85adf7f8d88"
+  x86_64: "sha256:aed845e4185a0b2a3c3d5e1d0a35491702c55889192bb9c30e67a3de6849c067"
+  aarch64: "sha256:05dc46ada4e23a1f58e72349f7c366aae2e9c7a7f1e7653095538bc5bba5e077"
 
 golang_architectures:
   x86_64: "amd64"
   aarch64: "arm64"
-golang_arch: "{{ java_architectures.get(ansible_architecture) }}"
-golang_download_url: "https://dl.google.com/go/go{{golang_version}}.linux-{{golang_arch}}.tar.gz"
+golang_arch: "{{ golang_architectures.get(ansible_architecture) }}"
+golang_download_url: "https://golang.org/dl/go{{golang_version}}.linux-{{golang_arch}}.tar.gz"
 golang_checksum: "{{ golang_checksums.get(ansible_architecture) }}"
 golang_cache_directory: "{{cache_directory}}/golang"
 golang_cache_file: "{{golang_cache_directory}}/golang.{{golang_version}}.tar.gz"
@@ -51,7 +51,7 @@ java_bin_dir: "{{java_base_dir}}/{{java_version_path}}"
 
 # Maven
 maven_version: "3.6.3"
-maven_download_url: "https://apache.mirrors.lucidnetworks.net/maven/maven-3/{{maven_version}}/binaries/apache-maven-{{maven_version}}-bin.tar.gz"
+maven_download_url: "http://apache.mirrors.lucidnetworks.net/maven/maven-3/{{maven_version}}/binaries/apache-maven-{{maven_version}}-bin.tar.gz"
 maven_checksum: "sha512:c35a1803a6e70a126e80b2b3ae33eed961f83ed74d18fcd16909b2d44d7dada3203f1ffe726c17ef8dcca2dcaa9fca676987befeadc9b9f759967a8cb77181c0"
 
 maven_cache_directory: "{{java_cache_directory}}"
@@ -63,3 +63,36 @@ kubernetes:
   kubelet_version: 1.17.4-00
   kubeadm_version: 1.17.4-00
   kubectl_version: 1.17.4-00
+
+# GCloud
+gcloud_version: 299.0.0-0
+
+# ProtoC
+protoc_version: "3.11.4"
+
+protoc_architectures:
+  x86_64: "x86_64"
+  aarch64: "aarch_64"
+protoc_arch: "{{ protoc_architectures.get(ansible_architecture) }}"
+protoc_download_url: "https://github.com/protocolbuffers/protobuf/releases/download/v{{protoc_version}}/protoc-{{protoc_version}}-linux-{{protoc_arch}}.zip"
+protoc_cache_directory: "{{cache_directory}}/protoc"
+protoc_cache_file: "{{protoc_cache_directory}}/protoc.{{protoc_version}}.zip"
+protoc_base_dir: "{{user_bin}}/protoc"
+protoc_version_path: "protoc-{{protoc_version}}"
+protoc_bin_dir: "{{protoc_base_dir}}/{{protoc_version_path}}"
+
+protoc_gen_go_version: "v1.25.0"
+protoc_gen_go_download_url: "https://github.com/protocolbuffers/protobuf-go/releases/download/{{protoc_gen_go_version}}/protoc-gen-go.{{protoc_gen_go_version}}.linux.amd64.tar.gz"
+protoc_gen_go_cache_file: "{{protoc_cache_directory}}/protoc-gen-go.{{protoc_gen_go_version}}.tar.gz"
+protoc_gen_go_version_path: "protoc-gen-go-{{protoc_gen_go_version}}"
+protoc_gen_go_bin_dir: "{{protoc_base_dir}}/{{protoc_gen_go_version_path}}"
+
+# Ruby
+ruby_version: "2.6.6"
+
+ruby_download_url: "https://rvm.io/binaries/ubuntu/18.04/x86_64/ruby-{{ruby_version}}.tar.bz2"
+ruby_cache_directory: "{{cache_directory}}/ruby"
+ruby_cache_file: "{{ruby_cache_directory}}/ruby.{{ruby_version}}.tar.bz2"
+ruby_base_dir: "{{user_bin}}/ruby"
+ruby_version_path: "ruby-{{ruby_version}}"
+ruby_bin_dir: "{{ruby_base_dir}}/{{ruby_version_path}}"
