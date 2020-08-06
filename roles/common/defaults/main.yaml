@@ -96,3 +96,22 @@ ruby_cache_file: "{{ruby_cache_directory}}/ruby.{{ruby_version}}.tar.bz2"
 ruby_base_dir: "{{user_bin}}/ruby"
 ruby_version_path: "ruby-{{ruby_version}}"
 ruby_bin_dir: "{{ruby_base_dir}}/{{ruby_version_path}}"
+
+# NodeJS
+nodejs_version: "v12.13.1"
+nodejs_checksums:
+  x86_64: "sha256:074a6129da34b768b791f39e8b74c6e4ab3349d1296f1a303ef3547a7f9cf9be"
+  aarch64: "sha256:a1c183f175344f492188543fa789576ed266b7542763ad07d880f9819d9f23d3"
+
+nodejs_architectures:
+  x86_64: "x64"
+  aarch64: "arm64"
+
+nodejs_arch: "{{ nodejs_architectures.get(ansible_architecture) }}"
+nodejs_download_url: "https://nodejs.org/dist/{{nodejs_version}}/node-{{nodejs_version}}-linux-{{nodejs_arch}}.tar.gz"
+nodejs_checksum: "{{ nodejs_checksums.get(ansible_architecture) }}"
+nodejs_cache_directory: "{{cache_directory}}/nodejs"
+nodejs_cache_file: "{{nodejs_cache_directory}}/nodejs.{{nodejs_version}}.tar.gz"
+nodejs_base_dir: "{{user_bin}}/nodejs"
+nodejs_version_path: "node-{{nodejs_version}}-linux-{{nodejs_arch}}"
+nodejs_bin_dir: "{{nodejs_base_dir}}/{{nodejs_version_path}}"

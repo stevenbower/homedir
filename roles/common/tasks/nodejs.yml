@@ -1,0 +1,34 @@
+
+- name: Create nodejs cache directory
+  file:
+    path: "{{nodejs_cache_directory}}"
+    mode: 0700
+    state: directory
+
+- name: "Download nodejs {{nodejs_version}}"
+  get_url:
+    url: "{{nodejs_download_url}}"
+    dest: "{{nodejs_cache_file}}"
+    checksum: "{{ nodejs_checksum }}"
+    force: false
+  environment: "{{internet_proxy_env}}"
+
+- name: Create nodejs bin dir
+  file:
+    path: "{{nodejs_base_dir}}"
+    mode: 0755
+    state: directory
+
+- name: Unpack nodejs
+  unarchive:
+    src: "{{nodejs_cache_file}}"
+    dest: "{{nodejs_base_dir}}"
+    creates: "{{nodejs_bin_dir}}"
+    remote_src: yes
+
+- name: Create nodejs bashrc
+  template:
+      src: bashrc_basic.j2
+      dest: "{{user_bashrc}}/10-nodejs"
+  vars:
+      bin: "{{nodejs_bin_dir}}/bin"

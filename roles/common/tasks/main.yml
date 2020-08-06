@@ -17,6 +17,12 @@
     mode: 0755
     state: directory
 
+- name: Create manual bin directory
+  file:
+    path: "{{user_home}}/bin"
+    mode: 0755
+    state: directory
+
 - name: Create bashrc directory
   file:
     path: "{{user_bashrc}}"
@@ -83,40 +89,49 @@
     - zip
     - unzip
     - bzip2
+    - jq
   become: true
 
-#- name: Git
-#  import_tasks: git.yml
-#
-#- name: Vim
-#  import_tasks: vim.yml
-#
-#- name: Apt
-#  import_tasks: apt.yml
-#
-#- name: Python
-#  import_tasks: python.yml
-#
-#- name: Go
-#  import_tasks: golang.yml
-#
-#- name: Java
-#  import_tasks: java.yml
-#
-#- name: Docker
-#  import_tasks: docker.yml
-#
-#- name: Kubernetes
-#  import_tasks: kubernetes.yml
-#
-#- name: GCloud
-#  import_tasks: gcloud.yml
-#
-#- name: ProtoC
-#  import_tasks: protoc.yml
-#
-#- name: Ruby
-#  import_tasks: ruby.yml
-#
+- name: Create default bashrc entry
+  template:
+    src: bashrc_basic.j2
+    dest: "{{user_bashrc}}/11-default"
+  vars:
+    bin: "{{user_home}}/bin"
+
+- name: Git
+  import_tasks: git.yml
+
+- name: Vim
+  import_tasks: vim.yml
+
+- name: Apt
+  import_tasks: apt.yml
+
+- name: Python
+  import_tasks: python.yml
+
+- name: Go
+  import_tasks: golang.yml
+
+- name: Java
+  import_tasks: java.yml
+
+- name: Docker
+  import_tasks: docker.yml
+
+- name: Kubernetes
+  import_tasks: kubernetes.yml
+
 - name: NodeJS
   import_tasks: nodejs.yml
+
+#- name: GCloud
+#  import_tasks: gcloud.yml
+
+#- name: ProtoC
+#  import_tasks: protoc.yml
+
+#- name: Ruby
+#  import_tasks: ruby.yml
+
