@@ -1,5 +1,5 @@
 {% if bin is defined %}
-PATH=${PATH}:{{bin}}
+export PATH=${PATH}:{{bin}}
 {% endif %}
 {% if extras is defined %}
 {% for ln in extras %}

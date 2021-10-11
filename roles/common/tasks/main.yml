@@ -86,6 +86,7 @@
 - name: Install some random packages
   apt:
     pkg:
+    - build-essential
     - zip
     - unzip
     - bzip2
@@ -132,6 +133,6 @@
 #- name: ProtoC
 #  import_tasks: protoc.yml
 
-#- name: Ruby
-#  import_tasks: ruby.yml
+- name: Ruby
+  import_tasks: ruby.yml
 
