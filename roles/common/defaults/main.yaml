@@ -14,10 +14,10 @@ git_user_name: stevenbower
 git_user_email: smb-github@alcyon.net
 
 # GOLANG
-golang_version: "1.14.4"
+golang_version: "1.17.2"
 golang_checksums:
-  x86_64: "sha256:aed845e4185a0b2a3c3d5e1d0a35491702c55889192bb9c30e67a3de6849c067"
-  aarch64: "sha256:05dc46ada4e23a1f58e72349f7c366aae2e9c7a7f1e7653095538bc5bba5e077"
+  x86_64: "sha256:f242a9db6a0ad1846de7b6d94d507915d14062660616a61ef7c808a76e4f1676"
+  aarch64: "sha256:a5a43c9cdabdb9f371d56951b14290eba8ce2f9b0db48fb5fc657943984fd4fc"
 
 golang_architectures:
   x86_64: "amd64"
@@ -60,9 +60,9 @@ maven_version_path: "apache-maven-{{maven_version}}"
 maven_bin_dir: "{{java_base_dir}}/{{maven_version_path}}"
 
 kubernetes:
-  kubelet_version: 1.17.4-00
-  kubeadm_version: 1.17.4-00
-  kubectl_version: 1.17.4-00
+  kubelet_version: 1.22.2-00
+  kubeadm_version: 1.22.2-00
+  kubectl_version: 1.22.2-00
 
 # GCloud
 gcloud_version: 299.0.0-0

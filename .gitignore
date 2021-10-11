@@ -1,3 +1,4 @@
 .vault-password
+.vault_password
 host_vars/*.yml
 *.work.gitconfig

@@ -118,8 +118,8 @@
 - name: Java
   import_tasks: java.yml
 
-- name: Docker
-  import_tasks: docker.yml
+#- name: Docker
+  #import_tasks: docker.yml
 
 - name: Kubernetes
   import_tasks: kubernetes.yml
@@ -133,6 +133,6 @@
 #- name: ProtoC
 #  import_tasks: protoc.yml
 
-- name: Ruby
-  import_tasks: ruby.yml
+#- name: Ruby
+  #import_tasks: ruby.yml
 
