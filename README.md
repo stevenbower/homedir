@@ -2,14 +2,14 @@
 
 Setup and manage my home directory / development environment (mostly targetted at WSL)
 
-# Setup
+## Setup
 
 ```$ ./setup.sh```
 
-# Create an encrtyped host_var containing your sudo password
+## Create an encrtyped host_var containing your sudo password
 
 ```$ ./encrypt.sh sudo > host_vars/localhost.yml```
 
-# Installing
+## Installing
 
 ```$ ./ansible_run.sh```
