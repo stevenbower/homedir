@@ -17,12 +17,13 @@
     update_cache: yes
     pkg:
     - docker-ce-cli
+    - docker-ce
+    - containerd.io
   become: true
 
-- name: Create Docker bashrc
-  template:
-      src: bashrc_basic.j2
-      dest: "{{user_bashrc}}/10-docker"
-  vars:
-      extras:
-          - "export DOCKER_HOST=tcp://0.0.0.0:2375"
+#- name: Create Docker bashrc
+#  template:
+#      src: bashrc_basic.j2
+#      dest: "{{user_bashrc}}/10-docker"
+#  vars:
+#      extras:

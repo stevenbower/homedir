@@ -39,6 +39,12 @@
       extras:
           - "GOROOT={{golang_bin_dir}}"
 
+- name: Create go-workspaces directory
+  file:
+    path: "{{user_home}}/go-workspaces"
+    mode: 0755
+    state: directory
+
 - name: Install go-workspaces
   git:
     repo: "https://github.com/stevenbower/go-workspaces.git"

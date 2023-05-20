@@ -112,20 +112,20 @@
 - name: Python
   import_tasks: python.yml
 
-- name: Go
-  import_tasks: golang.yml
-
-- name: Java
-  import_tasks: java.yml
+#- name: Go
+#  import_tasks: golang.yml
+#
+#- name: Java
+#  import_tasks: java.yml
+#
+#- name: NodeJS
+#  import_tasks: nodejs.yml
 
 #- name: Docker
-  #import_tasks: docker.yml
-
-- name: Kubernetes
-  import_tasks: kubernetes.yml
-
-- name: NodeJS
-  import_tasks: nodejs.yml
+#  import_tasks: docker.yml
+#
+#- name: Kubernetes
+#  import_tasks: kubernetes.yml
 
 #- name: GCloud
 #  import_tasks: gcloud.yml

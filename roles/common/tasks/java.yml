@@ -33,7 +33,7 @@
   vars:
       bin: "{{java_bin_dir}}/bin"
       extras:
-          - "JAVA_HOME={{java_bin_dir}}"
+          - "export JAVA_HOME={{java_bin_dir}}"
 
 # Maven
 - name: "Download Maven {{maven_version}}"
@@ -58,5 +58,5 @@
   vars:
       bin: "{{maven_bin_dir}}/bin"
       extras:
-          - "MAVEN_HOME={{maven_bin_dir}}"
+          - "export MAVEN_HOME={{maven_bin_dir}}"
 
